@@ -1,0 +1,65 @@
+[
+{
+	"Id": 1928,
+	"FirstName": "John",
+	"LastName": "Doe",
+	"Password": "pass",
+	"DateTo": "2015-06-31",
+	"Login": "JDOE",
+	"AccessGroupId": 123,
+	"Privilages": 1,
+	"DefaultMpkId": 13,
+	"Language": "PL",	
+	"Card": [
+		{ "Id": 150122, "Number": 1213212343, "DateTo": "2015-06-31" },
+		{ "Id": 150123, "Number": 1213454543, "DateTo": "2015-06-31" }
+	],
+	"Machines": [
+		100012,
+		100013,
+		100014
+	]
+},
+{
+	"Id": 2900,
+	"FirstName": "Jan",
+	"LastName": "Kowalski",
+	"Password": "pass2",
+	"DateTo": "2015-06-31",
+	"Login": "JKOWALSKI",
+	"AccessGroupId": 123,
+	"Privilages": 1,
+	"DefaultMpkId": 13,
+	"Language": "PL",	
+	"Card": [
+		{ "Id": 160122, "Number": 1214412343, "DateTo": "2015-06-31" },
+		{ "Id": 160123, "Number": 1214454543, "DateTo": "2015-06-31" }
+	],
+	"Machines": [
+		100012,
+		100013,
+		100014
+	]
+},
+{
+	"Id": 3755,
+	"FirstName": "Zdzisek",
+	"LastName": "Nowak",
+	"Password": "pass010",
+	"DateTo": "2015-06-31",
+	"Login": "ZNOWAK",
+	"AccessGroupId": 123,
+	"Privilages": 1,
+	"DefaultMpkId": 13,
+	"Language": "PL",	
+	"Card": [
+		{ "Id": 170122, "Number": 1213266343, "DateTo": "2015-06-31" },
+		{ "Id": 170123, "Number": 1213466543, "DateTo": "2015-06-31" }
+	],
+	"Machines": [
+		100012,
+		100013,
+		100014
+	]
+}
+]

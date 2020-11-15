@@ -1,0 +1,21 @@
+{
+	"Id": 1928,
+	"FirstName": "John",
+	"LastName": "Doe",
+	"Password": "pass",
+	"DateTo": "2015-06-31",
+	"Login": "JDOE",
+	"AccessGroupId": 123,
+	"Privilages": 1,
+	"DefaultMpkId": 13,
+	"Language": "PL",	
+	"Card": [
+		{ "Id": 150122, "Number": 1213212343, "DateTo": "2015-06-31" },
+		{ "Id": 150123, "Number": 1213454543, "DateTo": "2015-06-31" }
+	],
+	"Machines": [
+		100012,
+		100013,
+		100014
+	]
+}

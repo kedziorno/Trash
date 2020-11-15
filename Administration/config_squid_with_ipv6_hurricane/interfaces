@@ -1,0 +1,56 @@
+allow-hotplug eth0
+iface eth0 inet static
+	address XXX.XXX.XXX.149
+	netmask 255.255.255.192
+	network XXX.XXX.XXX.128
+	broadcast XXX.XXX.XXX.191
+	gateway XXX.XXX.XXX.129
+	dns-nameservers 8.8.8.8 8.8.4.4
+	dns-search XXX.net
+
+iface eth0 inet6 static
+	address 2001:*::1
+	netmask 48
+
+iface eth0 inet6 static
+	address 2001:*::2
+	netmask 48
+
+iface eth0 inet6 static
+	address 2001:*::10
+	netmask 48
+
+iface eth0 inet6 static
+	address 2001:*::ff
+	netmask 48
+iface eth0 inet6 static
+	address 2001:*::10
+	netmask 48
+
+auto hurricane0
+iface hurricane0 inet6 v4tunnel
+        address 2001:*::2
+        netmask 64
+        endpoint XXX.XXX.XXX.XXX
+        local XXX.XXX.XXX.XXX
+        gateway 2001:*::1
+        ttl 255
+	up route -A inet6 add 2001:*::/48 dev eth0
+#	up ip route add ::/0 dev hurricane0
+
+
+#iface eth0 inet6 static
+#	address 2001:*::1
+#	netmask 64
+#
+#auto hurricane0
+#iface hurricane0 inet6 v4tunnel
+#        address 2001:*::2
+#        netmask 64
+#        endpoint XXX.XXX.XXX.XXX
+#        local XXX.XXX.XXX.XXX
+#        gateway 2001:*::1
+#        ttl 255
+#	up route -A inet6 add 2001:*::/64 dev eth0
+#	up ip route add ::/0 dev hurricane0
+
