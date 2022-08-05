@@ -85,8 +85,13 @@ with VCDWriter(w, timescale=t_timescale.data, version=t_version.data, date=t_dat
 		print ("file : "+str(num_ct_index))
 		while 1:
 			if (token.kind is TokenKind.DATE or token.kind is TokenKind.VERSION or token.kind is TokenKind.TIMESCALE or token.kind is TokenKind.SCOPE):
-				token = next(lt)
-				continue
+				try:
+					token = next(lt)
+					continue
+				except StopIteration:
+					index = 0
+					list3.clear()
+					break
 			if token.kind is TokenKind.VAR:
 				v = ScalarVariable(ident=token.var.id_code,type='wire',size=1,init='X')
 				if get_header == 0:
@@ -94,39 +99,66 @@ with VCDWriter(w, timescale=t_timescale.data, version=t_version.data, date=t_dat
 				list1.append(token.var.id_code)
 				list2.append(token.var.reference)
 				list3.append(v)
-				token = next(lt)
-				continue
+				try:
+					token = next(lt)
+					continue
+				except StopIteration:
+					index = 0
+					list3.clear()
+					break
 			if token.kind is TokenKind.UPSCOPE or token.kind is TokenKind.ENDDEFINITIONS:
 				get_header = 1 #hack - next event
-				token = next(lt)
-				continue
+				try:
+					token = next(lt)
+					continue
+				except StopIteration:
+					index = 0
+					list3.clear()
+					break
 			if token.kind is TokenKind.CHANGE_TIME and token.data == 0:
 				prev_max = token.data
-				token = next(lt)
 				index = index + 1
-				continue
+				try:
+					token = next(lt)
+					continue
+				except StopIteration:
+					index = 0
+					list3.clear()
+					break
 			if token.kind is TokenKind.CHANGE_SCALAR and prev_max == 0:
 				i = len(list3)-1
-				for l in list3:
-					v = Variable(ident=token.data.id_code,type='wire',size='1',init=token.data.value)
-					if l.ident == token.data.id_code:
-						if get_header == 1:
-							writer.dump_on(oldmax+1)
-						else:
-							writer.dump_on(oldmax)
-						if get_header == 1:
-							writer.change(l,oldmax+1,v.value)
-						else:
-							writer.change(l,oldmax,v.value)
+				while i >= 0:
+					for l in list3:
+						v = Variable(ident=token.data.id_code,type='wire',size='1',init=token.data.value)
+						if l.ident == token.data.id_code:
+							if get_header == 1:
+								writer.dump_on(oldmax)
+							else:
+								writer.dump_on(oldmax)
+							if get_header == 1:
+								writer.change(l,oldmax,v.value)
+							else:
+								writer.change(l,oldmax,v.value)
+					prev_max = 1
+					i = i - 1
+					try:
 						token = next(lt)
-				prev_max = 1
-				continue
+						continue
+					except StopIteration:
+						index = 0
+						list3.clear()
+						break
 			if token.kind is TokenKind.CHANGE_TIME and prev_max == 1:
 				if token.data + oldmax > max:
-					max = token.data + oldmax 
-				token = next(lt)
+					max = token.data + oldmax
 				index = index + 1
-				continue 
+				try:
+					token = next(lt)
+					continue
+				except StopIteration:
+					index = 0
+					list3.clear()
+					break
 			if token.kind is TokenKind.CHANGE_SCALAR and prev_max == 1:
 				for l in list3:
 					if l.ident == token.data.id_code:
@@ -139,16 +171,16 @@ with VCDWriter(w, timescale=t_timescale.data, version=t_version.data, date=t_dat
 							writer.change(l,max,v.value)
 						else:
 							writer.change(l,max+1,v.value)
-				if index == num_ct[num_ct_index]:
+				try:
+					token = next(lt)
+					continue
+				except StopIteration:
 					index = 0
 					list3.clear()
 					break
-				else:
-					token = next(lt)
-					continue
 		num_ct_index = num_ct_index + 1
-		oldmax = max
-
+		oldmax = max + 1
+	
 w.close()
 
 for of in opened_files:
